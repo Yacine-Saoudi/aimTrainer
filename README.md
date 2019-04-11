@@ -1,2 +1,2 @@
 # aimTrainer
-click at circles, that's all.
+Click at targets, that's all.
