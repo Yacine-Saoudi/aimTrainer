@@ -5,6 +5,9 @@
  */
 package aimtrainer;
 
+
+import javax.swing.ImageIcon;
+import java.awt.Color;
 /**
  *
  * @author S346950775
@@ -16,6 +19,10 @@ public class mainMenu extends javax.swing.JFrame {
      */
     public mainMenu() {
         initComponents();
+        logoLabel.setLocation(200,30);
+        ImageIcon image = new ImageIcon("P:/AGLOGO.png");
+        logoLabel.setIcon(image);
+        logoLabel.setText("");
     }
 
     /**
@@ -27,66 +34,77 @@ public class mainMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        freeButton = new javax.swing.JButton();
+        trackButton = new javax.swing.JButton();
+        lbButton = new javax.swing.JButton();
+        helpButton = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
+        logoLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
 
-        jButton1.setText("Freeplay");
+        freeButton.setText("Freeplay");
 
-        jButton2.setText("Tracking Mode");
+        trackButton.setText("Tracking Mode");
 
-        jButton3.setText("Leaderboard");
+        lbButton.setText("Leaderboard");
 
-        jButton4.setText("Help");
+        helpButton.setText("Help");
 
-        jButton5.setText("Exit");
+        exitButton.setText("Exit");
+
+        logoLabel.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(freeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(trackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3)
+                        .addComponent(lbButton)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4)
+                        .addComponent(helpButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton5)))
+                        .addComponent(exitButton)))
                 .addGap(44, 44, 44))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(115, 115, 115)
+                .addComponent(logoLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {freeButton, trackButton});
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton3, jButton4, jButton5});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {exitButton, helpButton, lbButton});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(138, 138, 138)
+                .addContainerGap()
+                .addComponent(logoLabel)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addGap(44, 44, 44)
+                    .addComponent(freeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(trackButton))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(lbButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {freeButton, trackButton});
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton3, jButton4, jButton5});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {exitButton, helpButton, lbButton});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -121,16 +139,19 @@ public class mainMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new mainMenu().setVisible(true);
+                mainMenu menu = new mainMenu();
+                menu.setVisible(true);
+                menu.getContentPane().setBackground( Color.WHITE );
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton exitButton;
+    private javax.swing.JButton freeButton;
+    private javax.swing.JButton helpButton;
+    private javax.swing.JButton lbButton;
+    private javax.swing.JLabel logoLabel;
+    private javax.swing.JButton trackButton;
     // End of variables declaration//GEN-END:variables
 }
