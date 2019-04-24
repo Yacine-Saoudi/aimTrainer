@@ -5,13 +5,9 @@
  */
 package aimtrainer;
 
-
 import javax.swing.ImageIcon;
 import java.awt.Color;
-/**
- *
- * @author S346950775
- */
+
 public class mainMenu extends javax.swing.JFrame {
 
     /**
