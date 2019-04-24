@@ -19,8 +19,7 @@ public class mainMenu extends javax.swing.JFrame {
      */
     public mainMenu() {
         initComponents();
-        logoLabel.setLocation(200,30);
-        ImageIcon image = new ImageIcon("P:/AGLOGO.png");
+        ImageIcon image = new ImageIcon("AGLOGO.png");
         logoLabel.setIcon(image);
         logoLabel.setText("");
     }
@@ -66,13 +65,13 @@ public class mainMenu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(freeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(trackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbButton)
                         .addGap(18, 18, 18)
                         .addComponent(helpButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addComponent(exitButton)))
                 .addGap(44, 44, 44))
             .addGroup(layout.createSequentialGroup()
@@ -140,6 +139,7 @@ public class mainMenu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 mainMenu menu = new mainMenu();
+                menu.setLocationRelativeTo(null);
                 menu.setVisible(true);
                 menu.getContentPane().setBackground( Color.WHITE );
             }
