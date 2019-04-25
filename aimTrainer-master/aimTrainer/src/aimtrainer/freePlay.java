@@ -13,11 +13,19 @@ import java.util.Timer;
 import javax.swing.*;
 
 
-public class freePlay extends JFrame {
-    List<Target> targets = new ArrayList<>();
+public class freePlay extends JPanel {
+    static List<Target> targets = new ArrayList<>();
    
     public freePlay() {
         initComponents();
+        Target b = new Target();
+        /*b.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerfomed(java.awt.event.ActionEvent e) {
+                
+            }
+        });*/
+        
+        add(b);
     }
 
     public void createTarget() {
@@ -70,13 +78,22 @@ public class freePlay extends JFrame {
         }
         //</editor-fold>
         /* Create and display the form */
-        freePlay freeplay = new freePlay();
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
+                JFrame freeplay = new JFrame();
+                //freeplay.createTarget();
+                //Target b = new Target();
+                        
+                //freeplay.add(b);
+                freeplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                freeplay.setSize(800,600);
+                freeplay.add(new freePlay());
+                freeplay.setResizable(false);
                 freeplay.setVisible(true);
             }
         });
-        while(true) {
+        /*while(true) {
             Timer t = new Timer();
             t.schedule(new TimerTask() {
                 @Override
@@ -84,7 +101,9 @@ public class freePlay extends JFrame {
                    // add new target on screen every 5 seconds
                 }
             }, 0, 5000);
-        }
+        }*/
+        //freeplay.createTarget();
+        //freeplay.add(targets.get(0));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
