@@ -13,19 +13,11 @@ import java.util.Timer;
 import javax.swing.*;
 
 
-public class freePlay extends JPanel {
+public class freePlay extends JFrame {
     static List<Target> targets = new ArrayList<>();
    
     public freePlay() {
         initComponents();
-        Target b = new Target();
-        /*b.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerfomed(java.awt.event.ActionEvent e) {
-                
-            }
-        });*/
-        
-        add(b);
     }
 
     public void createTarget() {
@@ -83,12 +75,10 @@ public class freePlay extends JPanel {
             public void run() {
                 JFrame freeplay = new JFrame();
                 //freeplay.createTarget();
-                //Target b = new Target();
-                        
-                //freeplay.add(b);
+                Target b = new Target();
                 freeplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 freeplay.setSize(800,600);
-                freeplay.add(new freePlay());
+                freeplay.add(b);
                 freeplay.setResizable(false);
                 freeplay.setVisible(true);
             }
