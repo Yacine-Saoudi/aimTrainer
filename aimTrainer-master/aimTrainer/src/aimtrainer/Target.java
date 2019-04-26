@@ -11,6 +11,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Shape;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -24,19 +26,25 @@ public class Target extends JButton {
     private final int yt;
     public static String path = "target.png";
     private int radius = 50;
-    JLabel label = new JLabel();
+    boolean deleteNow = false;
     
     public Target() {
         Random rand = new Random();
         xt = rand.nextInt(701) + 50;
         yt = rand.nextInt(501) + 50;
-        label.setBounds(xt,yt,radius,radius);
         
         setBackground(Color.lightGray);
         setFocusable(false);
         
         setPreferredSize(new Dimension(radius, radius));
         setContentAreaFilled(false);
+        
+        addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteNow = true;
+            }
+        });
     }
     
     @Override
@@ -82,19 +90,5 @@ public class Target extends JButton {
     public void incRad() {
         radius++;
     }
-    
-    public JLabel getLabel1() throws IOException{
-        label.setBounds(xt-radius,yt-radius,radius,radius);
-        BufferedImage img = null;
-        img = ImageIO.read(new File(path));
-       
-        Image dimg = img.getScaledInstance(label.getWidth(), label.getHeight(),
-            Image.SCALE_SMOOTH);
-        ImageIcon image = new ImageIcon(dimg);
-        
-        label.setIcon(image);
-        
-        return label;
-    }
-    
+
 }
