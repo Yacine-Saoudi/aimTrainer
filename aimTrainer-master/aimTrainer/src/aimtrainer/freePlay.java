@@ -8,8 +8,10 @@ package aimtrainer;
 import java.util.List;
 import java.util.ArrayList;
 import java.awt.*;
+import java.util.Iterator;
 import java.util.TimerTask;
 import java.util.Timer;
+import java.util.logging.Handler;
 import javax.swing.*;
 
 
@@ -18,10 +20,6 @@ public class freePlay extends JFrame {
    
     public freePlay() {
         initComponents();
-    }
-
-    public void createTarget() {
-        targets.add(new Target());
     }
     
     @SuppressWarnings("unchecked")
@@ -47,7 +45,7 @@ public class freePlay extends JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws InterruptedException{
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -70,28 +68,42 @@ public class freePlay extends JFrame {
         }
         //</editor-fold>
         /* Create and display the form */
+        JFrame freeplay = new JFrame();
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JFrame freeplay = new JFrame();
-                //freeplay.createTarget();
-                Target b = new Target();
                 freeplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 freeplay.setSize(800,600);
-                freeplay.add(b);
+                freeplay.setLocationRelativeTo(null);
                 freeplay.setResizable(false);
                 freeplay.setVisible(true);
             }
         });
-        /*while(true) {
-            Timer t = new Timer();
-            t.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                   // add new target on screen every 5 seconds
+        List<Target> toAdd = new ArrayList<Target>();
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Target target = new Target();
+                toAdd.add(target);
+                freeplay.add(target);
+                System.out.println("hi");
+                freeplay.revalidate();
+            }
+        }, 0, 1000);
+        while (true) {
+            targets.addAll(toAdd);
+            List<Target> toRemove = new ArrayList<Target>();
+            for (Target target : targets) {
+                if (target.deleteNow) {
+                    toRemove.add(target);
+                    freeplay.remove(target);
                 }
-            }, 0, 5000);
-        }*/
+                targets.removeAll(toRemove);
+            }
+            
+        }
+        
         //freeplay.createTarget();
         //freeplay.add(targets.get(0));
     }
