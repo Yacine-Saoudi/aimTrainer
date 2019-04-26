@@ -24,14 +24,18 @@ import javax.swing.*;
 public class Target extends JButton {
     private final int xt;
     private final int yt;
+    private final int xcenter;
+    private final int ycenter;
     public static String path = "target.png";
-    private int radius = 50;
+    private int radius = 30;
     boolean deleteNow = false;
     
     public Target() {
         Random rand = new Random();
         xt = rand.nextInt(701) + 50;
         yt = rand.nextInt(501) + 50;
+        xcenter = xt-radius/2;
+        ycenter = yt-radius/2;
         
         setBackground(Color.lightGray);
         setFocusable(false);
@@ -43,6 +47,7 @@ public class Target extends JButton {
             @Override
             public void actionPerformed(ActionEvent e) {
                 deleteNow = true;
+                freePlay.score++;
             }
         });
     }
@@ -54,7 +59,7 @@ public class Target extends JButton {
         } else {
           g.setColor(getBackground());
         }
-        g.fillOval(xt, yt, radius, radius);
+        g.fillOval(xcenter, ycenter, radius, radius);
 
         super.paintComponent(g);
     }
@@ -62,7 +67,7 @@ public class Target extends JButton {
     @Override
     protected void paintBorder(Graphics g) {
         g.setColor(Color.darkGray);
-        g.drawOval(xt, yt, radius, radius);
+        g.drawOval(xcenter, ycenter, radius, radius);
     }
     
     Shape shape;
@@ -70,7 +75,7 @@ public class Target extends JButton {
     public boolean contains(int x, int y) {
       // If the button has changed size,  make a new shape object.
       if (shape == null || !shape.getBounds().equals(getBounds())) {
-        shape = new Ellipse2D.Float(xt, yt, radius, radius);
+        shape = new Ellipse2D.Float(xcenter, ycenter, radius, radius);
       }
       return shape.contains(x, y);
     }

@@ -17,6 +17,7 @@ import javax.swing.*;
 
 public class freePlay extends JFrame {
     static List<Target> targets = new ArrayList<>();
+    static int score = 0;
    
     public freePlay() {
         initComponents();
@@ -27,16 +28,18 @@ public class freePlay extends JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(800, 600));
+        setResizable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         pack();
@@ -69,9 +72,12 @@ public class freePlay extends JFrame {
         //</editor-fold>
         /* Create and display the form */
         JFrame freeplay = new JFrame();
+        JLabel scoreLabel = new JLabel();
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                scoreLabel.setBounds(0,0,50,15);
+                freeplay.add(scoreLabel);
                 freeplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 freeplay.setSize(800,600);
                 freeplay.setLocationRelativeTo(null);
@@ -87,19 +93,27 @@ public class freePlay extends JFrame {
                 Target target = new Target();
                 toAdd.add(target);
                 freeplay.add(target);
-                System.out.println("hi");
+                //System.out.println("hi");
                 freeplay.revalidate();
             }
         }, 0, 1000);
         while (true) {
             targets.addAll(toAdd);
-            List<Target> toRemove = new ArrayList<Target>();
-            for (Target target : targets) {
+            Iterator<Target> iter = targets.iterator();
+            while(iter.hasNext()) {
+                Target target = iter.next();
+                if (target == null) {continue;}
                 if (target.deleteNow) {
-                    toRemove.add(target);
                     freeplay.remove(target);
+                    iter.remove();
+                    freeplay.repaint();
+                } else if (target.getRadius() < 50) {
+                    target.incRad();
+                    Thread.sleep(20);
+                    freeplay.repaint();
                 }
-                targets.removeAll(toRemove);
+                scoreLabel.setText("Score: "+ score);
+                //System.out.println(targets);
             }
             
         }
