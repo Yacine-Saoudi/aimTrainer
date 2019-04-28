@@ -9,7 +9,9 @@ package aimtrainer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Shape;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
@@ -19,7 +21,7 @@ import javax.swing.*;
 public class Target extends JButton {
     private final int xt;
     private final int yt;
-    public static String path = "target.png";
+    public static String path = "targ.png";
     private final int finalR = 50;
     private int currentR = 30;
     private boolean max = false;
@@ -49,19 +51,17 @@ public class Target extends JButton {
     @Override
     protected void paintComponent(Graphics g) {
         if (getModel().isArmed()) {
-          g.setColor(Color.gray);
+        g.setColor(Color.PINK);
         } else {
-          g.setColor(getBackground());
+        g.setColor(Color.darkGray);
         }
-        g.fillOval(xt-currentR/2, yt-currentR/2, currentR, currentR);
-
         super.paintComponent(g);
     }
     
     @Override
     protected void paintBorder(Graphics g) {
-        g.setColor(Color.darkGray);
-        g.drawOval(xt-currentR/2, yt-currentR/2, currentR, currentR);
+        Image tarG =Toolkit.getDefaultToolkit().getImage("Target.png");
+        g.drawImage(tarG, xt-currentR/2, yt-currentR/2, currentR, currentR, null);    
     }
     
     Shape shape;
@@ -96,7 +96,6 @@ public class Target extends JButton {
         if (max && currentR > 1) {
             currentR--;
         }
-        setIcon(new ImageIcon(((new ImageIcon("target.png").getImage().getScaledInstance(currentR,currentR,java.awt.Image.SCALE_SMOOTH)))));
     }
 
 }
