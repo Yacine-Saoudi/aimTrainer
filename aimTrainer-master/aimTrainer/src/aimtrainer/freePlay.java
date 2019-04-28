@@ -18,6 +18,7 @@ import javax.swing.*;
 public class freePlay extends JFrame {
     static List<Target> targets = new ArrayList<>();
     static int score = 0;
+    static int missed = 0;
    
     public freePlay() {
         initComponents();
@@ -76,8 +77,9 @@ public class freePlay extends JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                scoreLabel.setBounds(0,0,50,15);
+                //freeplay.setLayout(null);
                 freeplay.add(scoreLabel);
+                scoreLabel.setBounds(0,0,50,15);
                 freeplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 freeplay.setSize(800,600);
                 freeplay.setLocationRelativeTo(null);
@@ -91,9 +93,11 @@ public class freePlay extends JFrame {
             @Override
             public void run() {
                 Target target = new Target();
+                target.setIcon(new ImageIcon(((new ImageIcon("target.png").getImage().getScaledInstance(target.getRadius(),target.getRadius(),java.awt.Image.SCALE_SMOOTH)))));
                 toAdd.add(target);
                 freeplay.add(target);
-                //System.out.println("hi");
+                //target.setBounds(target.getXValue()-target.getRadius()/2,target.getYValue()-target.getRadius()/2,target.getRadius(),target.getRadius());
+                //freeplay.repaint();
                 freeplay.revalidate();
             }
         }, 0, 1000);
@@ -107,15 +111,19 @@ public class freePlay extends JFrame {
                     freeplay.remove(target);
                     iter.remove();
                     freeplay.repaint();
-                } else if (target.getRadius() < 50) {
-                    target.incRad();
-                    Thread.sleep(20);
+                } else if (target.getRadius() == 1) {
+                    missed++;
+                    freeplay.remove(target);
+                    iter.remove();
                     freeplay.repaint();
+                } else {
+                    target.changeRad();
+                    freeplay.repaint();
+                    Thread.sleep(20);
                 }
                 scoreLabel.setText("Score: "+ score);
                 //System.out.println(targets);
             }
-            
         }
         
         //freeplay.createTarget();
