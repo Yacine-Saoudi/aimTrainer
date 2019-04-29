@@ -17,14 +17,24 @@ import javax.swing.*;
 
 public class freePlay extends JFrame {
     static List<Target> targets = new ArrayList<>();
-    private final static Timer t = new Timer();
+    JLabel lives;
+    private final static Timer T = new Timer();
     final static int LIVES = 3;
-    static int score = 0;
-    static int missed = 0;
+    static int score;
+    static int missed;
     static int targetsCreated = 0;
+    static String heartPath = "heart.png"; 
    
     public freePlay() {
-        //initComponents();
+        lives = new JLabel("x "+(LIVES-missed), SwingConstants.CENTER);
+        
+        Image img = ((new ImageIcon(heartPath)).getImage()).getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+        lives.setIcon(new ImageIcon(img));
+        lives.setBounds(365, 5, 70, 20);
+        add(lives, BorderLayout.NORTH);
+        
+        score = 0;
+        missed = 0;
     }
  
     @Override
@@ -35,14 +45,28 @@ public class freePlay extends JFrame {
     private void updateLives() {
         if (missed <= 3) {
             System.out.println("Lives: " + (LIVES-missed));
+            lives.setText("x "+(LIVES-missed));
         }
         if (missed == 3) {
             System.out.println("YOU LOSE!");
-            t.cancel();
+            T.cancel();
             
             JLabel loseLabel = new JLabel("You lost! Score: " + score, SwingConstants.CENTER);
-            add(loseLabel, BorderLayout.CENTER);
-            loseLabel.setSize(50,15);
+            String loseText = loseLabel.getText();
+            loseLabel.setSize(400,300);
+            loseLabel.setText("You Lost! Score: " + score);
+            
+            int stringWidth = loseLabel.getFontMetrics(loseLabel.getFont()).stringWidth("You Lost! Score: " + score);
+            int componentWidth = loseLabel.getWidth();
+            
+            double widthRatio = (double)componentWidth / (double)stringWidth;
+            int newFontSize = (int)(loseLabel.getFont().getSize() * widthRatio);
+            int componentHeight = loseLabel.getHeight();
+            int fontSizeToUse = Math.min(newFontSize, componentHeight);
+            
+            loseLabel.setFont(new Font(loseLabel.getFont().getName(), Font.PLAIN, fontSizeToUse));      
+            add(loseLabel);
+            
             revalidate();
             repaint();
         }
@@ -126,24 +150,28 @@ public class freePlay extends JFrame {
                 
                 System.out.println(targetsCreated);
                 if (targetsCreated < 10) {
-                    t.schedule(new createTarget(), 1200);
+                    T.schedule(new createTarget(), 1200);
                 } else if (targetsCreated < 20) {
-                    t.schedule(new createTarget(), 1100);
+                    T.schedule(new createTarget(), 1100);
                 } else if (targetsCreated < 30) {
-                    t.schedule(new createTarget(), 1000);
+                    T.schedule(new createTarget(), 1000);
                 } else if (targetsCreated < 40) {
-                    t.schedule(new createTarget(), 900);
+                    T.schedule(new createTarget(), 900);
                 } else if (targetsCreated < 50) {
-                    t.schedule(new createTarget(), 800);
+                    T.schedule(new createTarget(), 800);
                 } else if (targetsCreated < 60) {
-                    t.schedule(new createTarget(), 700);
-                } else {
-                    t.schedule(new createTarget(), 600);
+                    T.schedule(new createTarget(), 700);
+                } else if (targetsCreated < 70) {
+                    T.schedule(new createTarget(), 600);
+                } else if (targetsCreated < 80) {
+                    T.schedule(new createTarget(), 500);
+                } else if (targetsCreated < 90) {
+                    T.schedule(new createTarget(), 400);
                 }
             }
         }
         
-        t.schedule(new createTarget(), 0);
+        T.schedule(new createTarget(), 0);
         
         boolean lose = false;
         while (!lose) {
@@ -178,6 +206,8 @@ public class freePlay extends JFrame {
             freeplay.repaint();
             Thread.sleep(20);
         }
+        Thread.sleep(5 * 1000);
+        freeplay.dispose();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
