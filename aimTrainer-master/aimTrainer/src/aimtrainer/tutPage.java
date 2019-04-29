@@ -19,11 +19,16 @@ public class tutPage extends javax.swing.JFrame {
      */
     public tutPage() {
         initComponents();
-ImageIcon imageIcon = new ImageIcon("TUTORIAL.PNG"); // load the image to a imageIcon
-Image image = imageIcon.getImage(); // transform it 
-Image newimg = image.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
-imageIcon = new ImageIcon(newimg); 
-    
+        setTitle("Tutorial");
+        setVisible(true);
+        setSize(1000,800);
+        setResizable(false);
+        ImageIcon image = new ImageIcon("TUTORIAL.png");
+        tutLabel.setIcon(image);
+        tutLabel.setText("");
+        
+        
+
     }
 
     /**
@@ -35,11 +40,11 @@ imageIcon = new ImageIcon(newimg);
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        logoLabel = new javax.swing.JLabel();
+        tutLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        logoLabel.setText("jLabel1");
+        tutLabel.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -47,14 +52,14 @@ imageIcon = new ImageIcon(newimg);
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(49, 49, 49)
-                .addComponent(logoLabel)
+                .addComponent(tutLabel)
                 .addContainerGap(317, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(logoLabel)
+                .addComponent(tutLabel)
                 .addContainerGap(264, Short.MAX_VALUE))
         );
 
@@ -97,6 +102,6 @@ imageIcon = new ImageIcon(newimg);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel logoLabel;
+    private javax.swing.JLabel tutLabel;
     // End of variables declaration//GEN-END:variables
 }
