@@ -29,8 +29,8 @@ public class Target extends JButton {
     
     public Target() {
         Random rand = new Random();
-        xt = (rand.nextInt(741) + finalR);
-        yt = (rand.nextInt(521) + finalR);
+        xt = (rand.nextInt(701) + finalR);
+        yt = (rand.nextInt(481) + finalR+20);
         
         
         setBackground(Color.lightGray);

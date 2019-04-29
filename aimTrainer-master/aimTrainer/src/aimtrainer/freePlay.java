@@ -17,6 +17,8 @@ import javax.swing.*;
 
 public class freePlay extends JFrame {
     static List<Target> targets = new ArrayList<>();
+    private final static Timer t = new Timer();
+    final static int LIVES = 3;
     static int score = 0;
     static int missed = 0;
     static int targetsCreated = 0;
@@ -25,6 +27,26 @@ public class freePlay extends JFrame {
         //initComponents();
     }
  
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+    }
+    
+    private void updateLives() {
+        if (missed <= 3) {
+            System.out.println("Lives: " + (LIVES-missed));
+        }
+        if (missed == 3) {
+            System.out.println("YOU LOSE!");
+            t.cancel();
+            
+            JLabel loseLabel = new JLabel("You lost! Score: " + score, SwingConstants.CENTER);
+            add(loseLabel, BorderLayout.CENTER);
+            loseLabel.setSize(50,15);
+            revalidate();
+            repaint();
+        }
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -74,14 +96,13 @@ public class freePlay extends JFrame {
         }
         //</editor-fold>
         /* Create and display the form */
-        JFrame freeplay = new JFrame();
+        freePlay freeplay = new freePlay();
         JLabel scoreLabel = new JLabel();
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                //freeplay.setLayout(null);
                 freeplay.add(scoreLabel, BorderLayout.NORTH);
-                scoreLabel.setBounds(0,0,50,15);
+                scoreLabel.setSize(50,15);
                 freeplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 freeplay.setSize(800,600);
                 freeplay.setLocationRelativeTo(null);
@@ -90,7 +111,6 @@ public class freePlay extends JFrame {
             }
         });
         List<Target> toAdd = new ArrayList<>();
-        Timer t = new Timer();
         
         class createTarget extends TimerTask {
             //int targetsCreated = 0;
@@ -102,32 +122,36 @@ public class freePlay extends JFrame {
                 freeplay.add(target);
                 freeplay.revalidate();
                 freeplay.repaint();
+                System.out.printf("X: %d Y: %d", target.getXValue(), target.getYValue());
                 
                 System.out.println(targetsCreated);
                 if (targetsCreated < 10) {
-                    t.schedule(new createTarget(), 1000);
+                    t.schedule(new createTarget(), 1200);
                 } else if (targetsCreated < 20) {
-                    t.schedule(new createTarget(), 900);
+                    t.schedule(new createTarget(), 1100);
                 } else if (targetsCreated < 30) {
-                    t.schedule(new createTarget(), 800);
+                    t.schedule(new createTarget(), 1000);
                 } else if (targetsCreated < 40) {
-                    t.schedule(new createTarget(), 700);
+                    t.schedule(new createTarget(), 900);
                 } else if (targetsCreated < 50) {
-                    t.schedule(new createTarget(), 600);
+                    t.schedule(new createTarget(), 800);
                 } else if (targetsCreated < 60) {
-                    t.schedule(new createTarget(), 500);
+                    t.schedule(new createTarget(), 700);
                 } else {
-                    t.schedule(new createTarget(), 400);
+                    t.schedule(new createTarget(), 600);
                 }
             }
         }
         
         t.schedule(new createTarget(), 0);
         
-        while (true) {
+        boolean lose = false;
+        while (!lose) {
             targets.addAll(toAdd);
+            toAdd.clear();
+            //System.out.println(targets);
             Iterator<Target> iter = targets.iterator();
-            while(iter.hasNext()) {
+            while(iter.hasNext() && !lose) {
                 Target target = iter.next();
                 if (target == null) {continue;}
                 if (target.deleteNow) {
@@ -137,26 +161,22 @@ public class freePlay extends JFrame {
                     freeplay.repaint();
                 } else if (target.getRadius() == 1) {
                     missed++;
+                    if (missed == 3) {lose = true;}
+                    freeplay.updateLives();
                     freeplay.remove(target);
                     iter.remove();
                     freeplay.revalidate();
                     freeplay.repaint();
-                } else {
-                    //target.changeRad();
-                    //freeplay.validate();
-                    //freeplay.repaint();
-                    //Thread.sleep(20);
-                }
+                } 
                 scoreLabel.setText("Score: "+ score);
             }
             
             for (Target target : targets) {
                 target.changeRad();
             }
-            //Thread.sleep(40);
             freeplay.validate();
             freeplay.repaint();
-            Thread.sleep(80);
+            Thread.sleep(20);
         }
     }
 
