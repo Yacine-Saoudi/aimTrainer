@@ -19,10 +19,12 @@ public class freePlay extends JFrame {
     static List<Target> targets = new ArrayList<>();
     static int score = 0;
     static int missed = 0;
+    static int targetsCreated = 0;
    
     public freePlay() {
-        initComponents();
+        //initComponents();
     }
+ 
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -45,7 +47,7 @@ public class freePlay extends JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     /**
      * @param args the command line arguments
      */
@@ -78,7 +80,7 @@ public class freePlay extends JFrame {
             @Override
             public void run() {
                 //freeplay.setLayout(null);
-                freeplay.add(scoreLabel);
+                freeplay.add(scoreLabel, BorderLayout.NORTH);
                 scoreLabel.setBounds(0,0,50,15);
                 freeplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 freeplay.setSize(800,600);
@@ -87,20 +89,41 @@ public class freePlay extends JFrame {
                 freeplay.setVisible(true);
             }
         });
-        List<Target> toAdd = new ArrayList<Target>();
+        List<Target> toAdd = new ArrayList<>();
         Timer t = new Timer();
-        t.schedule(new TimerTask() {
+        
+        class createTarget extends TimerTask {
+            //int targetsCreated = 0;
             @Override
             public void run() {
+                targetsCreated++;
                 Target target = new Target();
-                target.setIcon(new ImageIcon(((new ImageIcon("target.png").getImage().getScaledInstance(target.getRadius(),target.getRadius(),java.awt.Image.SCALE_SMOOTH)))));
                 toAdd.add(target);
                 freeplay.add(target);
-                //target.setBounds(target.getXValue()-target.getRadius()/2,target.getYValue()-target.getRadius()/2,target.getRadius(),target.getRadius());
-                //freeplay.repaint();
                 freeplay.revalidate();
+                freeplay.repaint();
+                
+                System.out.println(targetsCreated);
+                if (targetsCreated < 10) {
+                    t.schedule(new createTarget(), 1000);
+                } else if (targetsCreated < 20) {
+                    t.schedule(new createTarget(), 900);
+                } else if (targetsCreated < 30) {
+                    t.schedule(new createTarget(), 800);
+                } else if (targetsCreated < 40) {
+                    t.schedule(new createTarget(), 700);
+                } else if (targetsCreated < 50) {
+                    t.schedule(new createTarget(), 600);
+                } else if (targetsCreated < 60) {
+                    t.schedule(new createTarget(), 500);
+                } else {
+                    t.schedule(new createTarget(), 400);
+                }
             }
-        }, 0, 1000);
+        }
+        
+        t.schedule(new createTarget(), 0);
+        
         while (true) {
             targets.addAll(toAdd);
             Iterator<Target> iter = targets.iterator();
@@ -110,24 +133,31 @@ public class freePlay extends JFrame {
                 if (target.deleteNow) {
                     freeplay.remove(target);
                     iter.remove();
+                    freeplay.revalidate();
                     freeplay.repaint();
                 } else if (target.getRadius() == 1) {
                     missed++;
                     freeplay.remove(target);
                     iter.remove();
+                    freeplay.revalidate();
                     freeplay.repaint();
                 } else {
-                    target.changeRad();
-                    freeplay.repaint();
-                    Thread.sleep(20);
+                    //target.changeRad();
+                    //freeplay.validate();
+                    //freeplay.repaint();
+                    //Thread.sleep(20);
                 }
                 scoreLabel.setText("Score: "+ score);
-                //System.out.println(targets);
             }
+            
+            for (Target target : targets) {
+                target.changeRad();
+            }
+            //Thread.sleep(40);
+            freeplay.validate();
+            freeplay.repaint();
+            Thread.sleep(80);
         }
-        
-        //freeplay.createTarget();
-        //freeplay.add(targets.get(0));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

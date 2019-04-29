@@ -21,7 +21,7 @@ import javax.swing.*;
 public class Target extends JButton {
     private final int xt;
     private final int yt;
-    public static String path = "targ.png";
+    public static String path = "Target.png";
     private final int finalR = 50;
     private int currentR = 30;
     private boolean max = false;
@@ -30,13 +30,13 @@ public class Target extends JButton {
     public Target() {
         Random rand = new Random();
         xt = (rand.nextInt(741) + finalR);
-        yt = (rand.nextInt(521) + 50);
+        yt = (rand.nextInt(521) + finalR);
         
         
         setBackground(Color.lightGray);
         setFocusable(false);
         
-        setPreferredSize(new Dimension(currentR, currentR));
+        //setBounds(xt-currentR/2, yt-currentR/2, currentR, currentR);
         setContentAreaFilled(false);
         
         addActionListener(new ActionListener() {
@@ -51,17 +51,17 @@ public class Target extends JButton {
     @Override
     protected void paintComponent(Graphics g) {
         if (getModel().isArmed()) {
-        g.setColor(Color.PINK);
+            g.setColor(Color.PINK);
         } else {
-        g.setColor(Color.darkGray);
+            g.setColor(Color.darkGray);
         }
         super.paintComponent(g);
     }
     
     @Override
     protected void paintBorder(Graphics g) {
-        Image tarG =Toolkit.getDefaultToolkit().getImage("Target.png");
-        g.drawImage(tarG, xt-currentR/2, yt-currentR/2, currentR, currentR, null);    
+        Image tarG =Toolkit.getDefaultToolkit().getImage(path);
+        g.drawImage(tarG, xt-currentR/2, yt-currentR/2, currentR, currentR, null);
     }
     
     Shape shape;
