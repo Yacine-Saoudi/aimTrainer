@@ -8,6 +8,8 @@ package aimtrainer;
 import java.util.List;
 import java.util.ArrayList;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Iterator;
 import java.util.TimerTask;
 import java.util.Timer;
@@ -33,6 +35,22 @@ public class freePlay extends JFrame {
         lives = new JLabel("x "+(LIVES-missed), SwingConstants.CENTER);
         score = 0;
         targetsCreated = 0;
+        
+        addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                System.out.println("Closed");
+                e.getWindow().dispose();
+                targets.clear();
+                T = new Timer();
+                missed = 0;
+                lives = new JLabel("x "+(LIVES-missed), SwingConstants.CENTER);
+                score = 0;
+                targetsCreated = 0;
+            }
+        });
     }
  
     @Override
@@ -53,6 +71,7 @@ public class freePlay extends JFrame {
             String loseText = "You Lost! Score: " + score;
             loseLabel.setSize(200,100);
             loseLabel.setText("You Lost! Score: " + score + "    Closing... please wait");
+            System.out.println("l");
             
             int stringWidth = loseLabel.getFontMetrics(loseLabel.getFont()).stringWidth(loseText);
             int componentWidth = loseLabel.getWidth();
@@ -187,7 +206,7 @@ public class freePlay extends JFrame {
                     targets.addAll(toAdd);
                     toAdd.clear();
                     Iterator<Target> iter = targets.iterator();
-                    List<Target> toRemove = new ArrayList<Target>();
+                    //List<Target> toRemove = new ArrayList<Target>();
                     while(iter.hasNext() && !lose) {
                         Target target = iter.next();
                         if (target == null) {continue;}

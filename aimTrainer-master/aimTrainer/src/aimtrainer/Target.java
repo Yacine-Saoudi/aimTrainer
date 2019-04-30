@@ -61,7 +61,7 @@ public class Target extends JButton {
     @Override
     protected void paintBorder(Graphics g) {
         Image tarG =Toolkit.getDefaultToolkit().getImage(path);
-        g.drawImage(tarG, xt-currentR/2, yt-currentR/2, currentR, currentR, null);
+        g.drawImage(tarG, xt-currentR/2, yt-currentR+20/2, currentR, currentR, null);
     }
     
     Shape shape;
@@ -69,7 +69,7 @@ public class Target extends JButton {
     public boolean contains(int x, int y) {
       // If the button has changed size,  make a new shape object.
       if (shape == null || !shape.getBounds().equals(getBounds())) {
-        shape = new Ellipse2D.Float(xt-currentR/2, yt-currentR/2, currentR, currentR);
+        shape = new Ellipse2D.Float(xt-currentR/2, yt-currentR+20/2, currentR, currentR);
       }
       return shape.contains(x, y);
     }
