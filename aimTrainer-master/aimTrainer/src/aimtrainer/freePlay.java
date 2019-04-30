@@ -11,14 +11,15 @@ import java.awt.*;
 import java.util.Iterator;
 import java.util.TimerTask;
 import java.util.Timer;
-import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 
 public class freePlay extends JFrame {
     static List<Target> targets = new ArrayList<>();
-    JLabel lives;
-    private final static Timer T = new Timer();
+    static JLabel lives;// = new JLabel("x "+(LIVES-missed), SwingConstants.CENTER);
+    private static Timer T = new Timer();
     final static int LIVES = 3;
     static int score;
     static int missed;
@@ -26,15 +27,12 @@ public class freePlay extends JFrame {
     static String heartPath = "heart.png"; 
    
     public freePlay() {
-        lives = new JLabel("x "+(LIVES-missed), SwingConstants.CENTER);
-        
-        Image img = ((new ImageIcon(heartPath)).getImage()).getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
-        lives.setIcon(new ImageIcon(img));
-        lives.setBounds(365, 5, 70, 20);
-        add(lives, BorderLayout.NORTH);
-        
-        score = 0;
+        targets.clear();
+        T = new Timer();
         missed = 0;
+        lives = new JLabel("x "+(LIVES-missed), SwingConstants.CENTER);
+        score = 0;
+        targetsCreated = 0;
     }
  
     @Override
@@ -42,21 +40,21 @@ public class freePlay extends JFrame {
         super.paint(g);
     }
     
-    private void updateLives() {
+    private void updateLives() throws InterruptedException {
         if (missed <= 3) {
-            System.out.println("Lives: " + (LIVES-missed));
+            //System.out.println("Lives: " + (LIVES-missed));
             lives.setText("x "+(LIVES-missed));
         }
         if (missed == 3) {
-            System.out.println("YOU LOSE!");
+            //System.out.println("YOU LOSE!");
             T.cancel();
             
             JLabel loseLabel = new JLabel("You lost! Score: " + score, SwingConstants.CENTER);
-            String loseText = loseLabel.getText();
-            loseLabel.setSize(400,300);
-            loseLabel.setText("You Lost! Score: " + score);
+            String loseText = "You Lost! Score: " + score;
+            loseLabel.setSize(200,100);
+            loseLabel.setText("You Lost! Score: " + score + "    Closing... please wait");
             
-            int stringWidth = loseLabel.getFontMetrics(loseLabel.getFont()).stringWidth("You Lost! Score: " + score);
+            int stringWidth = loseLabel.getFontMetrics(loseLabel.getFont()).stringWidth(loseText);
             int componentWidth = loseLabel.getWidth();
             
             double widthRatio = (double)componentWidth / (double)stringWidth;
@@ -69,6 +67,9 @@ public class freePlay extends JFrame {
             
             revalidate();
             repaint();
+            
+            Thread.sleep(5 * 1000);
+            dispose();
         }
     }
     
@@ -97,7 +98,7 @@ public class freePlay extends JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) throws InterruptedException{
+    public static void main(String args[]) throws InterruptedException {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -122,12 +123,18 @@ public class freePlay extends JFrame {
         /* Create and display the form */
         freePlay freeplay = new freePlay();
         JLabel scoreLabel = new JLabel();
+        
+        Image img = ((new ImageIcon(heartPath)).getImage()).getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+        lives.setIcon(new ImageIcon(img));
+        lives.setBounds(365, 5, 70, 20);
+        freeplay.add(lives, BorderLayout.NORTH);
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 freeplay.add(scoreLabel, BorderLayout.NORTH);
                 scoreLabel.setSize(50,15);
-                freeplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                freeplay.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 freeplay.setSize(800,600);
                 freeplay.setLocationRelativeTo(null);
                 freeplay.setResizable(false);
@@ -137,7 +144,6 @@ public class freePlay extends JFrame {
         List<Target> toAdd = new ArrayList<>();
         
         class createTarget extends TimerTask {
-            //int targetsCreated = 0;
             @Override
             public void run() {
                 targetsCreated++;
@@ -146,9 +152,9 @@ public class freePlay extends JFrame {
                 freeplay.add(target);
                 freeplay.revalidate();
                 freeplay.repaint();
-                System.out.printf("X: %d Y: %d", target.getXValue(), target.getYValue());
+                //System.out.printf("Y: %d X: %d", target.getYValue(), target.getXValue());
                 
-                System.out.println(targetsCreated);
+                //System.out.println(targetsCreated);
                 if (targetsCreated < 10) {
                     T.schedule(new createTarget(), 1200);
                 } else if (targetsCreated < 20) {
@@ -171,43 +177,58 @@ public class freePlay extends JFrame {
             }
         }
         
-        T.schedule(new createTarget(), 0);
-        
-        boolean lose = false;
-        while (!lose) {
-            targets.addAll(toAdd);
-            toAdd.clear();
-            //System.out.println(targets);
-            Iterator<Target> iter = targets.iterator();
-            while(iter.hasNext() && !lose) {
-                Target target = iter.next();
-                if (target == null) {continue;}
-                if (target.deleteNow) {
-                    freeplay.remove(target);
-                    iter.remove();
-                    freeplay.revalidate();
+        class loop extends Thread {
+            public void run() {
+                T = new Timer();
+                createTarget timerTask = new createTarget();
+                T.schedule(timerTask, 0);
+                boolean lose = false;
+                while (!lose) {
+                    targets.addAll(toAdd);
+                    toAdd.clear();
+                    Iterator<Target> iter = targets.iterator();
+                    List<Target> toRemove = new ArrayList<Target>();
+                    while(iter.hasNext() && !lose) {
+                        Target target = iter.next();
+                        if (target == null) {continue;}
+                        if (target.deleteNow) {
+                            freeplay.remove(target);
+                            iter.remove();
+                            freeplay.revalidate();
+                            freeplay.repaint();
+                        } else if (target.getRadius() == 1) {
+                            missed++;
+                            if (missed == 3) {lose = true;}
+                            try {
+                                freeplay.updateLives();
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(freePlay.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            freeplay.remove(target);
+                            iter.remove();
+                            freeplay.revalidate();
+                            freeplay.repaint();
+                        } 
+                        scoreLabel.setText("Score: "+ score);
+                    }
+
+                    for (Target target : targets) {
+                        target.changeRad();
+                    }
+                    freeplay.validate();
                     freeplay.repaint();
-                } else if (target.getRadius() == 1) {
-                    missed++;
-                    if (missed == 3) {lose = true;}
-                    freeplay.updateLives();
-                    freeplay.remove(target);
-                    iter.remove();
-                    freeplay.revalidate();
-                    freeplay.repaint();
-                } 
-                scoreLabel.setText("Score: "+ score);
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(freePlay.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
-            
-            for (Target target : targets) {
-                target.changeRad();
-            }
-            freeplay.validate();
-            freeplay.repaint();
-            Thread.sleep(20);
         }
-        Thread.sleep(5 * 1000);
-        freeplay.dispose();
+        
+        targets.clear();
+        loop thread = new loop();
+        thread.start();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

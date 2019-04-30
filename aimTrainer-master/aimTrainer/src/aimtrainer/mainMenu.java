@@ -5,11 +5,16 @@
  */
 package aimtrainer;
 
+import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 
-public class mainMenu extends javax.swing.JFrame {
-
+public class mainMenu extends JFrame {
+    static boolean play = false;
     /**
      * Creates new form mainMenu
      */
@@ -20,6 +25,8 @@ public class mainMenu extends javax.swing.JFrame {
         logoLabel.setText("");
     }
 
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -36,14 +43,39 @@ public class mainMenu extends javax.swing.JFrame {
         setResizable(false);
 
         freeButton.setText("Freeplay");
+        freeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                freeButtonActionPerformed(evt);
+            }
+        });
 
         trackButton.setText("Tracking Mode");
+        trackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                trackButtonActionPerformed(evt);
+            }
+        });
 
         lbButton.setText("Leaderboard");
+        lbButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lbButtonActionPerformed(evt);
+            }
+        });
 
         helpButton.setText("Help");
+        helpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helpButtonActionPerformed(evt);
+            }
+        });
 
         exitButton.setText("Exit");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
 
         logoLabel.setText("jLabel1");
 
@@ -99,10 +131,35 @@ public class mainMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
+        tutPage.main(new String[]{});
+    }//GEN-LAST:event_helpButtonActionPerformed
+
+    private void freeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_freeButtonActionPerformed
+        try {
+            freePlay.main(null);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(mainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_freeButtonActionPerformed
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void lbButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbButtonActionPerformed
+        System.out.println("Coming soon...");
+    }//GEN-LAST:event_lbButtonActionPerformed
+
+    private void trackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trackButtonActionPerformed
+       System.out.println("Coming soon...");
+    }//GEN-LAST:event_trackButtonActionPerformed
+    
     /**
      * @param args the command line arguments
      */
-    public void display() {
+    public static void main(String args[]) throws InterruptedException {
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -131,12 +188,15 @@ public class mainMenu extends javax.swing.JFrame {
             public void run() {
                 mainMenu menu = new mainMenu();
                 menu.setLocationRelativeTo(null);
+                menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 menu.setVisible(true);
                 menu.getContentPane().setBackground( Color.WHITE );
             }
         });
+        //freePlay.main(null);
     }
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exitButton;
     private javax.swing.JButton freeButton;

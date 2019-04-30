@@ -78,26 +78,41 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Freeplay"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="freeButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="trackButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Tracking Mode"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="trackButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="lbButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Leaderboard"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lbButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="helpButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Help"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="helpButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="exitButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Exit"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="logoLabel">
       <Properties>

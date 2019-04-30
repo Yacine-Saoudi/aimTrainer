@@ -7,6 +7,7 @@ package aimtrainer;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
@@ -26,9 +27,6 @@ public class tutPage extends javax.swing.JFrame {
         ImageIcon image = new ImageIcon("TUTORIAL.png");
         tutLabel.setIcon(image);
         tutLabel.setText("");
-        
-        
-
     }
 
     /**
@@ -92,11 +90,12 @@ public class tutPage extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(tutPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new tutPage().setVisible(true);
+                tutPage tPage = new tutPage();
+                tPage.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                tPage.setVisible(true);
             }
         });
     }

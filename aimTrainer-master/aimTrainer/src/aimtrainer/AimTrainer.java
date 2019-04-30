@@ -1,11 +1,14 @@
 
 package aimtrainer;
 
-public class AimTrainer {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-    public static void main(String[] args) {
-           mainMenu menu = new mainMenu();
-           menu.display();
+public class AimTrainer {
+    static boolean fp = false;
+    public static void main(String[] args) throws InterruptedException {
+            mainMenu.main(null);
     }
-    
 }
